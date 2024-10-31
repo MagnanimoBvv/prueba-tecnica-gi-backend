@@ -9,6 +9,14 @@ router.get('', (req, res) => {
   .catch(err => res.json(err));
 });
 
+router.get('/:id', (req, res) => {
+  const id = req.params.id;
+
+  Task.findById({_id: id})
+  .then(task => res.json(task))
+  .catch(err => res.json(err));
+});
+
 router.post('', (req, res) => {
   Task.create(req.body)
   .then(task => res.json(task))
@@ -17,6 +25,7 @@ router.post('', (req, res) => {
 
 router.put('/:id', (req, res) => {
   const id = req.params.id;
+
   Task.findByIdAndUpdate({ _id: id}, {
     title: req.body.title,
     description: req.body.description,
@@ -30,6 +39,7 @@ router.put('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   const id = req.params.id;
+
   Task.findByIdAndDelete({_id: id})
   .then(response => res.json(response))
   .catch(err => res.json(err));
